@@ -5,7 +5,7 @@ project (mkosd)
 include(CheckCXXCompilerFlag)
 
 set(CMAKE_CXX_COMPILER "/cache/llvm/bin/clang++")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -g3 -gdwarf-4")
 
 
 set(mkosd_srcs
@@ -13,4 +13,7 @@ set(mkosd_srcs
   )
 
 add_executable(mkosd ${mkosd_srcs})
-target_link_libraries(mkosd boost_program_options)
+target_link_libraries(mkosd
+  boost_filesystem
+  boost_program_options
+  boost_system)
