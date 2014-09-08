@@ -13,3 +13,4 @@ set(mkosd_srcs
   )
 
 add_executable(mkosd ${mkosd_srcs})
+target_link_libraries(mkosd boost_program_options)
