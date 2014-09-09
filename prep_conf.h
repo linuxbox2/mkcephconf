@@ -71,6 +71,7 @@ class MkOSD_PrepConf
     subst_s(ctx, "ceph_conf.var_run_ceph", "var-run-ceph");
     subst_i(ctx, "ceph_conf.max_open_files", "max-open-files");
     subst_i(ctx, "ceph_conf.xio_queue_depth", "xio-queue-depth");
+    subst_i(ctx, "ceph_conf.xio_port_shift", "xio-port-shift");
     subst_s(ctx, "ceph_conf.rdma_bind_addr", "rdma-bind-addr");
     subst_s(ctx, "mon0.host", "mon-0-host");
     subst_s(ctx, "mon0.addr", "mon-0-addr");

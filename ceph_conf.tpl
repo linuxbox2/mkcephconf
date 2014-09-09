@@ -48,9 +48,10 @@
 	debug filestore = 11
 
 	xio queue depth = {{xio-queue-depth}}
+	xio port shift = {{xio-port-shift}}
         rdma local = {{rdma-bind-addr}}
-	cluster_rdma = true
-	client_rdma = true
+	cluster rdma = true
+	client rdma = true
 
 ; monitors
 ;  You need at least one.  You need at least three if you want to
