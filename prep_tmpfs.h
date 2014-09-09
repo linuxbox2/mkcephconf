@@ -16,16 +16,16 @@
 #include <vector>
 #include <cstdlib>
 #include <boost/format.hpp>
-#include "mkosd_config.h"
+#include "mkcephconf_config.h"
 
-class MkOSD_Tmpfs
+class Mkcephconf_Tmpfs
 {
  public:
- MkOSD_Tmpfs(MkOSD_Config& _cfg) : cfg(_cfg) {
+ Mkcephconf_Tmpfs(Mkcephconf_Config& _cfg) : cfg(_cfg) {
     using namespace std;
-    n_osds = cfg.pt.get<int>("mkosd.n_osds");
-    tmpfs_size_mb = cfg.pt.get<int>("mkosd.tmpfs_size_mb");
-    data_dir = cfg.pt.get<string>("mkosd.data_dir");
+    n_osds = cfg.pt.get<int>("mkcephconf.n_osds");
+    tmpfs_size_mb = cfg.pt.get<int>("mkcephconf.tmpfs_size_mb");
+    data_dir = cfg.pt.get<string>("mkcephconf.data_dir");
     sq(data_dir);
 
     bf::path p_data_dir(data_dir);
@@ -46,7 +46,7 @@ class MkOSD_Tmpfs
       bf::create_directory(osd_p);
       mkfs_tmpfs(osd_p, tmpfs_size_mb);
     }
-  } // MkOSD_Tmpfs(MkOSD_Config& cfg)
+  } // Mkcephconf_Tmpfs(Mkcephconf_Config& cfg)
 
   void mkfs_tmpfs(const bf::path& p, int size) {
     using namespace std;
@@ -90,7 +90,7 @@ class MkOSD_Tmpfs
   int n_osds;
   int tmpfs_size_mb;
   std::string data_dir;
-  MkOSD_Config& cfg;
+  Mkcephconf_Config& cfg;
 };
 
 #endif /* PREP_TMPFS_H */

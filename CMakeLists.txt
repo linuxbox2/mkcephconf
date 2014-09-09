@@ -1,6 +1,6 @@
 
 cmake_minimum_required (VERSION 2.8.11)
-project (mkosd)
+project (mkcephconf)
 
 include(CheckCXXCompilerFlag)
 
@@ -13,12 +13,12 @@ include_directories(
 
 add_subdirectory(plustache)
 
-set(mkosd_srcs
-  mkosd_main.cc
+set(mkcephconf_srcs
+  mkcephconf_main.cc
   )
 
-add_executable(mkosd ${mkosd_srcs})
-target_link_libraries(mkosd
+add_executable(mkcephconf ${mkcephconf_srcs})
+target_link_libraries(mkcephconf
   plustache
   boost_filesystem
   boost_program_options

@@ -13,7 +13,7 @@
 #include <string>
 #include <boost/program_options.hpp>
 
-#include "mkosd_config.h"
+#include "mkcephconf_config.h"
 #include "prep_tmpfs.h"
 #include "prep_conf.h"
 
@@ -22,7 +22,7 @@ using namespace std;
 
 void usage()
 {
-  cout << "mkosd \n"
+  cout << "mkcephconf \n"
     "\t[--param_file=<path_to_params_ini>]\n"
        << endl;
 }
@@ -51,9 +51,9 @@ int main(int argc, char* argv[])
 
     cout << "param file: " << param_file << endl;
 
-    MkOSD_Config cfg(param_file);
-    MkOSD_Tmpfs tmpfs(cfg);
-    MkOSD_PrepConf conf(cfg);
+    Mkcephconf_Config cfg(param_file);
+    Mkcephconf_Tmpfs tmpfs(cfg);
+    Mkcephconf_PrepConf conf(cfg);
 
   }
 

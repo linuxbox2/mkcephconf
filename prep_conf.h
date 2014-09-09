@@ -17,17 +17,17 @@
 #include <fstream>
 #include <streambuf>
 #include <boost/format.hpp>
-#include "mkosd_config.h"
+#include "mkcephconf_config.h"
 #include <plustache/plustache_types.hpp>
 #include <plustache/template.hpp>
 
-class MkOSD_PrepConf
+class Mkcephconf_PrepConf
 {
  public:
- MkOSD_PrepConf(MkOSD_Config& _cfg) : cfg(_cfg) {
+ Mkcephconf_PrepConf(Mkcephconf_Config& _cfg) : cfg(_cfg) {
     using namespace std;
-    n_osds = cfg.pt.get<int>("mkosd.n_osds");
-    string tpl_dir = cfg.pt.get<string>("mkosd.ceph_conf_template");
+    n_osds = cfg.pt.get<int>("mkcephconf.n_osds");
+    string tpl_dir = cfg.pt.get<string>("mkcephconf.ceph_conf_template");
     sq(tpl_dir);
     string tpl = read_from_file(tpl_dir);
     tpl = subst_file(tpl);
@@ -64,7 +64,7 @@ class MkOSD_PrepConf
   std::string subst_file(std::string& tpl) {
     using namespace std;
     PlustacheTypes::ObjectType ctx;
-    ctx["title"] = "MkOSD";
+    ctx["title"] = "Mkcephconf";
     subst_s(ctx, "ceph_conf.ceph_dir", "ceph-dir");
     subst_s(ctx, "ceph_conf.ceph_data", "ceph-data");
     subst_s(ctx, "ceph_conf.var_log_ceph", "var-log-ceph");
@@ -123,7 +123,7 @@ class MkOSD_PrepConf
 
 public:
   int n_osds;
-  MkOSD_Config& cfg;
+  Mkcephconf_Config& cfg;
   std::string confdir;
 
 };

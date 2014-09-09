@@ -9,8 +9,8 @@
  * Foundation.  See file COPYING.
  *
  */
-#ifndef MKOSD_CONFIG_H
-#define MKOSD_CONFIG_H
+#ifndef MKCEPHCONF_CONFIG_H
+#define MKCEPHCONF_CONFIG_H
 
 #include <string>
 #include <boost/property_tree/ptree.hpp>
@@ -33,10 +33,10 @@ static inline std::string& sq(std::string& s) { // strip quotes
   return s;
 }
 
-class MkOSD_Config
+class Mkcephconf_Config
 {
  public:
-  MkOSD_Config(const std::string& param_file) {
+  Mkcephconf_Config(const std::string& param_file) {
     bf::path p(param_file);
     if (! bf::is_regular_file(p)) {
       throw
@@ -51,4 +51,4 @@ class MkOSD_Config
   std::vector<std::string>osd_devs;
 };
 
-#endif /* MKOSD_CONFIG_H */
+#endif /* MKCEPHCONF_CONFIG_H */
