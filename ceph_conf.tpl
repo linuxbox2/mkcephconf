@@ -129,7 +129,7 @@
 
 	; aieee (need this until sanitized binding merged)
 	ms bind port min = {{osd-bind-port-min}}
-	ms bind port max = {{{osd-bind-port-max}}
+	ms bind port max = {{osd-bind-port-max}}
 
 	devs = {{osd-dev}}
 	{{nl}}

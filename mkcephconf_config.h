@@ -46,6 +46,19 @@ class Mkcephconf_Config
     // read in as a .ini file
     pt::ini_parser::read_ini(param_file, pt);
   }
+
+  std::string read_from_file(const std::string& fname) {
+    using namespace std;
+    ifstream f(fname, ios::in);
+    if (! f.is_open()) {
+      throw
+	bf::filesystem_error(fname,
+			     make_error_code(no_such_file_or_directory));
+    }
+    string s((istreambuf_iterator<char>(f)), istreambuf_iterator<char>());
+    return s;
+  }
+
  public:
   pt::ptree pt;
   std::vector<std::string>osd_devs;

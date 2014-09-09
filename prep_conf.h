@@ -27,9 +27,9 @@ class Mkcephconf_PrepConf
  Mkcephconf_PrepConf(Mkcephconf_Config& _cfg) : cfg(_cfg) {
     using namespace std;
     n_osds = cfg.pt.get<int>("mkcephconf.n_osds");
-    string tpl_dir = cfg.pt.get<string>("mkcephconf.ceph_conf_template");
-    sq(tpl_dir);
-    string tpl = read_from_file(tpl_dir);
+    string tplf = cfg.pt.get<string>("mkcephconf.ceph_conf_template");
+    sq(tplf);
+    string tpl = cfg.read_from_file(tplf);
     tpl = subst_file(tpl);
     write_conf(tpl);
   }
@@ -107,18 +107,6 @@ class Mkcephconf_PrepConf
 
     Plustache::template_t t;
     return t.render(tpl, ctx2);
-  }
-
-  std::string read_from_file(const std::string& fname) {
-    using namespace std;
-    ifstream f(fname, ios::in);
-    if (! f.is_open()) {
-      throw
-	bf::filesystem_error(fname,
-			     make_error_code(no_such_file_or_directory));
-    }
-    string s((istreambuf_iterator<char>(f)), istreambuf_iterator<char>());
-    return s;
   }
 
 public:
