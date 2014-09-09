@@ -5,6 +5,7 @@
 
 #include "mkosd_config.h"
 #include "prep_tmpfs.h"
+#include "prep_conf.h"
 
 namespace po = boost::program_options;
 using namespace std;
@@ -42,6 +43,7 @@ int main(int argc, char* argv[])
 
     MkOSD_Config cfg(param_file);
     MkOSD_Tmpfs tmpfs(cfg);
+    MkOSD_PrepConf conf(cfg);
 
   }
 
