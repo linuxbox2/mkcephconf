@@ -1,8 +1,19 @@
+/*
+ * Simple ceph.conf automation.
+ *
+ * Copyright (C) 2014 CohortFS, LLC
+ *
+ * This is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License version 2.1, as published by the Free Software
+ * Foundation.  See file COPYING.
+ *
+ */
 #ifndef PREP_TMPFS_H
 #define PREP_TMPFS_H
 
-#include<string>
-#include<vector>
+#include <string>
+#include <vector>
 #include <cstdlib>
 #include <boost/format.hpp>
 #include "mkosd_config.h"

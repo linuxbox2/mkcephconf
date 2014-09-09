@@ -1,7 +1,18 @@
+/*
+ * Simple ceph.conf automation.
+ *
+ * Copyright (C) 2014 CohortFS, LLC
+ *
+ * This is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License version 2.1, as published by the Free Software
+ * Foundation.  See file COPYING.
+ *
+ */
 #ifndef MKOSD_CONFIG_H
 #define MKOSD_CONFIG_H
 
-#include<string>
+#include <string>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/filesystem.hpp>

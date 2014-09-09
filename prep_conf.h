@@ -1,7 +1,18 @@
+/*
+ * Simple ceph.conf automation.
+ *
+ * Copyright (C) 2014 CohortFS, LLC
+ *
+ * This is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License version 2.1, as published by the Free Software
+ * Foundation.  See file COPYING.
+ *
+ */
 #ifndef PREP_CONF_H
 #define PREP_CONF_H
 
-#include<string>
+#include <string>
 #include <cstdlib>
 #include <fstream>
 #include <streambuf>
@@ -16,13 +27,23 @@ class MkOSD_PrepConf
  MkOSD_PrepConf(MkOSD_Config& _cfg) : cfg(_cfg) {
     using namespace std;
     n_osds = cfg.pt.get<int>("mkosd.n_osds");
-    confdir = cfg.pt.get<string>("ceph_conf.ceph_confdir");
-    sq(confdir);
     string tpl_dir = cfg.pt.get<string>("mkosd.ceph_conf_template");
     sq(tpl_dir);
     string tpl = read_from_file(tpl_dir);
     tpl = subst_file(tpl);
-    cout << tpl << endl;
+    write_conf(tpl);
+  }
+
+  void write_conf(const std::string& conf) {
+    using namespace std;
+    confdir = cfg.pt.get<string>("ceph_conf.ceph_confdir");
+    sq(confdir);
+    bf::path p(confdir);
+    bf::create_directories(p);
+    p /= "ceph.conf";
+    ofstream of(p.native(), ios::out|ios::trunc);
+    of << conf;
+    of.close();
   }
 
   void subst_i(PlustacheTypes::ObjectType& ctx,
