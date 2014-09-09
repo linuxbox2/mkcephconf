@@ -2,6 +2,7 @@
 #define PREP_TMPFS_H
 
 #include<string>
+#include<vector>
 #include <cstdlib>
 #include <boost/format.hpp>
 #include "mkosd_config.h"
@@ -9,7 +10,7 @@
 class MkOSD_Tmpfs
 {
  public:
-  MkOSD_Tmpfs(MkOSD_Config& cfg) {
+ MkOSD_Tmpfs(MkOSD_Config& _cfg) : cfg(_cfg) {
     using namespace std;
     n_osds = cfg.pt.get<int>("mkosd.n_osds");
     tmpfs_size_mb = cfg.pt.get<int>("mkosd.tmpfs_size_mb");
@@ -46,7 +47,9 @@ class MkOSD_Tmpfs
     //cout << cmd << endl;
     ::system(cmd.c_str());
     // backing for lo device
-    boost::format f2("dd if=/dev/zero of=%1%/backing bs=%2% count=%3%");
+    boost::format f2("dd if=/dev/zero of=%1% bs=%2% count=%3%");
+    s += "/backing";
+    cfg.osd_devs.push_back(s);
     f2 % s;
     f2 % int(1024*1024);
     f2 % size;
@@ -76,6 +79,7 @@ class MkOSD_Tmpfs
   int n_osds;
   int tmpfs_size_mb;
   std::string data_dir;
+  MkOSD_Config& cfg;
 };
 
 #endif /* PREP_TMPFS_H */

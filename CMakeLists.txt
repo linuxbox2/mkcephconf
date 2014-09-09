@@ -22,4 +22,5 @@ target_link_libraries(mkosd
   plustache
   boost_filesystem
   boost_program_options
+  boost_regex
   boost_system)

@@ -37,7 +37,7 @@ class MkOSD_Config
   }
  public:
   pt::ptree pt;
-
+  std::vector<std::string>osd_devs;
 };
 
 #endif /* MKOSD_CONFIG_H */

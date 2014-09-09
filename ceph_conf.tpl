@@ -1,3 +1,4 @@
+{{# base_section}}
 ;
 ; {{title}} ceph.conf file.
 ;
@@ -21,7 +22,7 @@
 	auth client required = none
 
         ; allow ourselves to open a lot of files
-        max open files = 131072
+        max open files = {{max-open-files}}
 
         ; set up logging
         log file = {{var-log-ceph}}/$name.log
@@ -118,9 +119,9 @@
         ;debug filestore = 0/0
         ;debug journal = 20
 
-	ms bind port min = {{osd-bind-port-min}}
+{{/ base_section}}
 
-{{# osds}
+{{# osds}}
 [osd.{{osd-ix}}]
         host = {{osd-host}}
 	user = root
@@ -130,4 +131,5 @@
 	ms bind port max = {{{osd-bind-port-max}}
 
 	devs = {{osd-dev}}
+	{{nl}}
 {{/ osds}}
