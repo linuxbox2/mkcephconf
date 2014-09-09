@@ -1,0 +1,3 @@
+[submodule "plustache"]
+	path = plustache
+	url = https://github.com/linuxbox2/plustache.git
