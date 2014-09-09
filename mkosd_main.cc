@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
     cout << "param file: " << param_file << endl;
 
     MkOSD_Config cfg(param_file);
+    MkOSD_Tmpfs tmpfs(cfg);
 
   }
 
