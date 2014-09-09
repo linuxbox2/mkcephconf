@@ -45,6 +45,13 @@ class MkOSD_Tmpfs
     string cmd = f.str();
     //cout << cmd << endl;
     ::system(cmd.c_str());
+    // backing for lo device
+    boost::format f2("dd if=/dev/zero of=%1%/backing bs=%2% count=%3%");
+    f2 % s;
+    f2 % int(1024*1024);
+    f2 % size;
+    cmd = f2.str();
+    ::system(cmd.c_str());
   } // mkfs_tmpfs
 
   void umount_all(const bf::path& ddir) {
