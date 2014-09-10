@@ -26,12 +26,17 @@ class Mkcephconf_PrepConf
  public:
  Mkcephconf_PrepConf(Mkcephconf_Config& _cfg) : cfg(_cfg) {
     using namespace std;
-    n_osds = cfg.pt.get<int>("mkcephconf.n_osds");
+    string tpl = get_conf_template();
+    tpl = subst_file(tpl);
+    write_conf(tpl);
+  }
+
+  std::string get_conf_template() {
+    using namespace std;
     string tplf = cfg.pt.get<string>("mkcephconf.ceph_conf_template");
     sq(tplf);
     string tpl = cfg.read_from_file(tplf);
-    tpl = subst_file(tpl);
-    write_conf(tpl);
+    return tpl;
   }
 
   void write_conf(const std::string& conf) {
@@ -85,20 +90,21 @@ class Mkcephconf_PrepConf
 
     int port_min = cfg.pt.get<int>("osd.bind_port_min");
     int port_stride = cfg.pt.get<int>("osd.bind_port_stride");
-    string host = cfg.pt.get<string>("osd.host0");
-    sq(host);
 
     PlustacheTypes::CollectionType osds;
-    for (int ix = 0; ix < n_osds; ++ix) {
-      PlustacheTypes::ObjectType osd;
-      osd["osd-ix"] = to_string(ix);
-      osd["osd-host"] = host;
-      osd["osd-bind-port-min"] = to_string(port_min);
-      osd["osd-bind-port-max"] = to_string(port_min+port_stride-1);
-      osd["osd-dev"] = cfg.osd_devs[ix];
-      osd["nl"] = "\n";
-      osds.push_back(osd);
-      port_min += port_stride;
+    int ix = 0;
+    for (auto& host : cfg.osd_hosts) {
+      for (int d_ix = 0; d_ix < cfg.n_osds; ++d_ix, ++ix) {
+	PlustacheTypes::ObjectType osd;
+	osd["osd-ix"] = to_string(ix);
+	osd["osd-host"] = host;
+	osd["osd-bind-port-min"] = to_string(port_min);
+	osd["osd-bind-port-max"] = to_string(port_min+port_stride-1);
+	osd["osd-dev"] = cfg.osd_devs[d_ix];
+	osd["nl"] = "\n";
+	osds.push_back(osd);
+	port_min += port_stride;
+      }
     }
 
     Plustache::Context ctx2;
@@ -110,7 +116,6 @@ class Mkcephconf_PrepConf
   }
 
 public:
-  int n_osds;
   Mkcephconf_Config& cfg;
   std::string confdir;
 

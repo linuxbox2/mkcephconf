@@ -25,7 +25,6 @@ class Mkcephconf_Tmpfs
  public:
  Mkcephconf_Tmpfs(Mkcephconf_Config& _cfg) : cfg(_cfg) {
     using namespace std;
-    n_osds = cfg.pt.get<int>("mkcephconf.n_osds");
     tmpfs_size_mb = cfg.pt.get<int>("mkcephconf.tmpfs_size_mb");
     data_dir = cfg.pt.get<string>("mkcephconf.data_dir");
     sq(data_dir);
@@ -42,7 +41,7 @@ class Mkcephconf_Tmpfs
     string osd, cmd;
 
     umount_all(ctx2, p_data_dir);
-    for (osd_ix = 0; osd_ix < n_osds; ++osd_ix) {
+    for (osd_ix = 0; osd_ix < cfg.n_osds; ++osd_ix) {
       osd = string{"osd"} + to_string(osd_ix);
       bf::path osd_p(p_data_dir);
       osd_p /= osd;
@@ -54,7 +53,6 @@ class Mkcephconf_Tmpfs
     Plustache::template_t t;
     string sh = t.render(tpl, ctx2);
     write_sh(sh);
-
   } // Mkcephconf_Tmpfs(Mkcephconf_Config& cfg)
 
   void mkfs_tmpfs(PlustacheTypes::CollectionType& mkfs, const bf::path& p,
@@ -121,7 +119,6 @@ class Mkcephconf_Tmpfs
   }
 
  public:
-  int n_osds;
   int tmpfs_size_mb;
   std::string data_dir;
   Mkcephconf_Config& cfg;

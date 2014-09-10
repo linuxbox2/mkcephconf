@@ -54,11 +54,13 @@ class Mkcephconf_Config
     namespace ba = boost::algorithm;
 
     // TODO: plan
+    n_osds = pt.get<int>("mkcephconf.osds_per_host");
+
     string osd_s = pt.get<string>("mkcephconf.osd_hosts");
     sq(osd_s);
     ba::split(osd_hosts, osd_s, ba::is_any_of(", "), ba::token_compress_on);
     for (auto& elt : osd_hosts) {
-      cout << "elt: " << elt << endl;
+      cout << "OSD host: " << elt << endl;
     }
   }
 
@@ -75,6 +77,7 @@ class Mkcephconf_Config
   }
 
  public:
+  int n_osds;
   pt::ptree pt;
   std::vector<std::string>osd_hosts;
   std::vector<std::string>osd_devs;
