@@ -1,0 +1,2 @@
+Simple ceph.conf automation.
+
