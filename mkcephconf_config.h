@@ -17,6 +17,7 @@
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/exception.hpp>
+#include <boost/algorithm/string.hpp>
 
 namespace pt = boost::property_tree;
 namespace bf = boost::filesystem;
@@ -45,6 +46,20 @@ class Mkcephconf_Config
     }
     // read in as a .ini file
     pt::ini_parser::read_ini(param_file, pt);
+    make_plan();
+  }
+
+  void make_plan() {
+    using namespace std;
+    namespace ba = boost::algorithm;
+
+    // TODO: plan
+    string osd_s = pt.get<string>("mkcephconf.osd_hosts");
+    sq(osd_s);
+    ba::split(osd_hosts, osd_s, ba::is_any_of(", "), ba::token_compress_on);
+    for (auto& elt : osd_hosts) {
+      cout << "elt: " << elt << endl;
+    }
   }
 
   std::string read_from_file(const std::string& fname) {
@@ -61,6 +76,7 @@ class Mkcephconf_Config
 
  public:
   pt::ptree pt;
+  std::vector<std::string>osd_hosts;
   std::vector<std::string>osd_devs;
 };
 
